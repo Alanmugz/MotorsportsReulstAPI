@@ -1,0 +1,21 @@
+Create Web API
+    dotnet new webapi -o motorsportresultapi_public
+
+Create Solution
+    dotnet new sln -n motorsportsresultsapi -o f:\MotorsportResultsAPI\ide
+
+Add to Solution
+    cd to sln location
+        dotnet sln motorsportsresultsapi.sln add .\motorsportresultapi_public\motorsportresultapi_public.csproj
+        dotnet sln motorsportsresultsapi.sln add ..\src\MotorsportResultAPI.Data\MotorsportResultAPI.Data.csproj
+        dotnet sln motorsportsresultsapi.sln add ..\src\MotorsportResultAPI.Domain\MotorsportResultAPI.Domain.csproj
+        dotnet sln motorsportsresultsapi.sln add ..\src\MotorsportResultAPI.Types\MotorsportResultAPI.Types.csproj
+
+Add reference to project
+    cd to project
+    dotnet add reference ..\..\MotorsportResultAPI.Data\MotorsportResultAPI.Data.csproj
+
+Create a project
+    dotnet new classlib -o MotorsportResultAPI.Domain
+
+    F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\MotorsportResultAPI.Domain.csproj

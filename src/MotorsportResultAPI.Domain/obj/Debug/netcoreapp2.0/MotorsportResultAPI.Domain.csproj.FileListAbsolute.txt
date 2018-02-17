@@ -1,0 +1,13 @@
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.csproj.CoreCompileInputs.cache
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.AssemblyInfoInputs.cache
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.AssemblyInfo.cs
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.csprojResolveAssemblyReference.cache
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.deps.json
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.dll
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.pdb
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Data.dll
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Types.dll
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Data.pdb
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Types.pdb
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.dll
+F:\MotorsportResultsAPI\src\MotorsportResultAPI.Domain\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Domain.pdb

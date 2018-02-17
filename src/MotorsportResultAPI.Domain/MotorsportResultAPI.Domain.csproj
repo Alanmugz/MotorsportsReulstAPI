@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.5.0-rc05" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MotorsportResultAPI.Data\MotorsportResultAPI.Data.csproj" />
+    <ProjectReference Include="..\MotorsportResultAPI.Types\MotorsportResultAPI.Types.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+  </ItemGroup>
+</Project>
