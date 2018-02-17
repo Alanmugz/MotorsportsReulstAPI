@@ -1,8 +1,0 @@
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Types.deps.json
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Types.dll
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\bin\Debug\netcoreapp2.0\MotorsportResultAPI.Types.pdb
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Types.csproj.CoreCompileInputs.cache
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Types.AssemblyInfoInputs.cache
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Types.AssemblyInfo.cs
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Types.dll
-F:\MotorsportResultsAPI\src\MotorsportResultAPI.Types\obj\Debug\netcoreapp2.0\MotorsportResultAPI.Types.pdb
