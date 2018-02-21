@@ -13,7 +13,6 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 	public class CompetitorController : Controller
 	{
 		private readonly NLog.ILogger c_logger;
-		//private readonly ILog c_logger;
 		//private readonly MotorsportResultAPI.Data.Helper.Transformer c_transformer;
 		private MotorsportResultAPI.Data.AutoCross.ICompetitorRepository c_competitorRepository;
 
@@ -22,10 +21,45 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 			NLog.ILogger logger,
 			MotorsportResultAPI.Data.AutoCross.ICompetitorRepository competitorRepository)
 		{
-			//Check.RequireArgumentNotNull("logger", logger);
-
 			this.c_logger = logger;
 			this.c_competitorRepository = competitorRepository;
+		}
+
+
+		[HttpGet]
+		[Route("competitor")]
+		public IActionResult GetCompetitor()
+		{
+			var _loggingContext = string.Format("{0}.Get", this.GetType().FullName);
+			this.c_logger.Info("{0} Commencing", _loggingContext);
+
+			var competitorId = HttpContext.Request.Query["id"].ToString();
+			var eventId = HttpContext.Request.Query["eventId"].ToString();
+
+			var _id = $"{eventId}-{competitorId}";
+			var _result = this.c_competitorRepository.FetchById(_id);
+
+			this.c_logger.Info("{0} Completed", _loggingContext);
+			return Ok(_result);
+		}
+
+
+		[HttpGet]
+		[Route("event")]
+		public IActionResult GetEvent()
+		{			
+			var _loggingContext = string.Format("{0}.Get", this.GetType().FullName);
+			this.c_logger.Info("{0} Commencing", _loggingContext);
+
+			var eventId = HttpContext.Request.Query["id"].ToString();
+			var stageId = Convert.ToInt32(HttpContext.Request.Query["stageId"]);
+
+			var _competitorResults = this.c_competitorRepository.FetchByEventId(eventId.ToString());
+			var _previousStageResult = this.PreviousStageResult(_competitorResults, stageId);
+			var _response = this.BuildompetitorResponse(_competitorResults, _previousStageResult, stageId);
+
+			this.c_logger.Info("{0} Completed", _loggingContext);
+			return Ok(_response);
 		}
 
 
@@ -42,7 +76,6 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 			var _result = this.c_competitorRepository.Save(_domainCompetitor);
 
 			this.c_logger.Info("{0} Completed", _loggingContext);
-
 			return this.ParseResult(_result);
 		}
 
@@ -55,15 +88,14 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 			[FromBody] MotorsportResultAPI.Types.Domain.v1.AutoCross.StageResult stageResult)
 		{
 			var _loggingContext = string.Format("{0}.Post", this.GetType().FullName);
-			//this.c_logger.InfoFormat("{0} Commencing", _loggingContext);
+			this.c_logger.Info("{0} Commencing", _loggingContext);
 
 			var _result = this.c_competitorRepository.Append(
 				eventId,
 				competitorid,
 				stageResult);
 
-			//this.c_logger.InfoFormat("{0} Completed", _loggingContext);
-
+			this.c_logger.Info("{0} Completed", _loggingContext);
 			return this.ParseAppendResult(_result);
 		}
 
@@ -76,32 +108,24 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 			[FromBody] MotorsportResultAPI.Types.Domain.v1.AutoCross.StageResult stageResult)
 		{
 			var _loggingContext = string.Format("{0}.Post", this.GetType().FullName);
-			//this.c_logger.InfoFormat("{0} Commencing", _loggingContext);
+			this.c_logger.Info("{0} Commencing", _loggingContext);
 
 			var _result = this.c_competitorRepository.Update(
 				eventId,
 				competitorid,
 				stageResult);
 
-			//this.c_logger.InfoFormat("{0} Completed", _loggingContext);
-
+			this.c_logger.Info("{0} Completed", _loggingContext);
 			return this.ParseUpdateResult(_result);
 		}
 
 
-		[HttpGet]
-		[Route("eventid/{eventid}/stageId/{stageId}/result")]
-		public IActionResult Get(
-			[FromRoute] int eventId,
-			[FromRoute] int stageId)
+		private IEnumerable<MotorsportResultAPI.Types.ExternalMessage.v1.AutoCross.CompetitorResponse> BuildompetitorResponse(
+			IEnumerable<MotorsportResultAPI.Types.Data.v1.AutoCross.Competitor> competitorResults,
+			IEnumerable<MotorsportResultAPI.Types.Domain.v1.AutoCross.PreviousResult> previousStageResult,
+			int stageId)
 		{
-			var _loggingContext = string.Format("{0}.Post", this.GetType().FullName);
-			//this.c_logger.InfoFormat("{0} Commencing", _loggingContext);
-
-			var __competitorResults = this.c_competitorRepository.FetchByEventId(eventId.ToString());
-
-			var _previousStageResult = this.PreviousStageResult(__competitorResults, stageId);
-			var _competitorStageResults = __competitorResults
+			var _competitorStageResults = competitorResults
 				.Where(competitorStageResult => competitorStageResult.StageResults.Count() >= stageId)
 				.Select(competitor => {
 					var OverallTime = this.BuildOverallTime(competitor, stageId);
@@ -118,7 +142,7 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 				})
 			.OrderBy(response => response.OverallTime).ToList();
 		
-			var _response = _competitorStageResults.Select((competitor, position) => {
+			var _result = _competitorStageResults.Select((competitor, position) => {
 				var _differenceToLeader = TimeSpan.Zero;
 				var _differenceToPrevious = TimeSpan.Parse(_competitorStageResults.First().OverallTime);;
 				if (position == 0) { _differenceToLeader = TimeSpan.Parse(_competitorStageResults.First().OverallTime); }
@@ -134,14 +158,12 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 					competitor.PenaltyTime,
 					TimeSpan.Parse(competitor.OverallTime).Subtract(_differenceToLeader).ToString(),
 					TimeSpan.Parse(competitor.OverallTime).Subtract(_differenceToPrevious).ToString(),
-					this.PrevStagePosition(competitor.CarNumber, position, stageId, _previousStageResult));
+					this.PrevStagePosition(competitor.CarNumber, position, stageId, previousStageResult));
 
 				return _competitor;
 			});
 
-			//this.c_logger.InfoFormat("{0} Completed", _loggingContext);
-
-			return Ok(_response);
+			return _result;
 		}
 
 
