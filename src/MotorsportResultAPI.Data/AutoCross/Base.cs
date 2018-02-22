@@ -17,10 +17,8 @@ namespace MotorsportResultAPI.Data
 
 		public IMongoDatabase ConnectToDatabase()
 		{
-			//var _connectionString = this.c_connectionString.Split('*')[0];
-			var _connectionString = "mongodb://localhost";
-			//var _database = this.c_connectionString.Split('*')[1];
-			var _database = "autocross";
+			var _connectionString = this.c_connectionString.Split('|')[0];
+			var _database = this.c_connectionString.Split('|')[1];
 			var client = new MongoClient(_connectionString);
 			return client.GetDatabase(_database);
 		}

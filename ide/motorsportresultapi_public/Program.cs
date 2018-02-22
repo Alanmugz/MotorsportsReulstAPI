@@ -22,6 +22,13 @@ namespace motorsportresultapi_public
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    //https://hassantariqblog.wordpress.com/2017/02/20/asp-net-core-step-by-step-guide-to-access-appsettings-json-in-web-project-and-class-library/
+                    var env = hostingContext.HostingEnvironment;
+                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                    config.AddEnvironmentVariables();
+                })
                 .UseUrls("http://localhost:3791")
                 .Build();
     }

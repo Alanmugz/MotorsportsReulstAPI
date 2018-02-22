@@ -33,11 +33,11 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 			var _loggingContext = string.Format("{0}.Get", this.GetType().FullName);
 			this.c_logger.Info("{0} Commencing", _loggingContext);
 
-			var competitorId = HttpContext.Request.Query["id"].ToString();
-			var eventId = HttpContext.Request.Query["eventId"].ToString();
+			var _carNumber = HttpContext.Request.Query["carNumber"].ToString();
+			var _eventId = HttpContext.Request.Query["eventId"].ToString();
 
-			var _id = $"{eventId}-{competitorId}";
-			var _result = this.c_competitorRepository.FetchById(_id);
+			var _competitorId = $"{_eventId}-{_carNumber}";
+			var _result = this.c_competitorRepository.FetchById(_competitorId);
 
 			this.c_logger.Info("{0} Completed", _loggingContext);
 			return Ok(_result);
@@ -47,12 +47,12 @@ namespace MotorsportResultAPI.Domain.Controllers.AutoCross
 		[HttpGet]
 		[Route("event")]
 		public IActionResult GetEvent()
-		{			
-			var _loggingContext = string.Format("{0}.Get", this.GetType().FullName);
-			this.c_logger.Info("{0} Commencing", _loggingContext);
-
+		{
 			var eventId = HttpContext.Request.Query["id"].ToString();
 			var stageId = Convert.ToInt32(HttpContext.Request.Query["stageId"]);
+
+			var _loggingContext = string.Format("{0}.Get", this.GetType().FullName);
+			this.c_logger.Info("{0} Commencing", _loggingContext);
 
 			var _competitorResults = this.c_competitorRepository.FetchByEventId(eventId.ToString());
 			var _previousStageResult = this.PreviousStageResult(_competitorResults, stageId);
