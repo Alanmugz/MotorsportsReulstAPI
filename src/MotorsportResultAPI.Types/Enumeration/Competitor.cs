@@ -11,6 +11,7 @@ namespace MotorsportResultAPI.Types.Enumeration
 		DoesNotExist,
 		InvalidTimeFormat,
 		MatchingElement,
+		PreviousStageResultDoesNotExist,
 		Updated,
 	};
 }

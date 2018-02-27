@@ -32,11 +32,13 @@ namespace motorsportresultapi_public
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             //https://github.com/NLog/NLog.Web/wiki/Getting-started-with-ASP.NET-Core-2
-            services.AddSingleton<NLog.ILogger>(NLogBuilder.ConfigureNLog("nlog.config").GetLogger("defaultLogger"));
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetLogger("defaultLogger");
+            services.AddSingleton<NLog.ILogger>(logger);
 
             services.AddSingleton<MotorsportResultAPI.Data.AutoCross.ICompetitorRepository, MotorsportResultAPI.Data.AutoCross.CompetitorRepository>();
             services.AddTransient<MotorsportResultAPI.Data.AutoCross.ICompetitorRepository>(
                 competitorRepository => new MotorsportResultAPI.Data.AutoCross.CompetitorRepository(
+                    logger,
                     Configuration.GetSection("ConnectionStrings")["Database"],
                     new MotorsportResultAPI.Data.AutoCross.Mapper(),
                     new MotorsportResultAPI.Data.Helper.Transformer()));

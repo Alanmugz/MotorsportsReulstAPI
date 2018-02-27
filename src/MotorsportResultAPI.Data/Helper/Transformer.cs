@@ -9,10 +9,10 @@ namespace MotorsportResultAPI.Data.Helper
 
 		
 		public string ValidateTimeSpan(
-			string str)
+			TimeSpan subject)
 		{
 			TimeSpan _timeSpan;
-			if (!TimeSpan.TryParse(str, out _timeSpan))
+			if (!TimeSpan.TryParse(subject.ToString(), out _timeSpan))
 			{
 				return null;
 			}

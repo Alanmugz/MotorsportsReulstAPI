@@ -31,7 +31,7 @@ namespace MotorsportResultAPI.Types.Data.v1.AutoCross
 			string name,
 			string car,
 			string category,
-			List<MotorsportResultAPI.Types.Data.v1.AutoCross.StageResult> StageResults)
+			List<MotorsportResultAPI.Types.Data.v1.AutoCross.StageResult> stageResults)
 		{
 			//DBC
 			
@@ -41,7 +41,7 @@ namespace MotorsportResultAPI.Types.Data.v1.AutoCross
 			this.c_name = name;
 			this.c_car = car;
 			this.c_category = category;
-			this.c_stageResults = StageResults;
+			this.c_stageResults = stageResults;
 		}
 	}
 }

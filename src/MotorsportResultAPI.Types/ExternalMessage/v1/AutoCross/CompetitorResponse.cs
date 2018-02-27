@@ -38,11 +38,11 @@ namespace MotorsportResultAPI.Types.ExternalMessage.v1.AutoCross
 			string name,
 			string car,
 			string category,
-			string overallTime,
-			string stageTime,
-			string penaltyTime,
-			string DifferenceToLeader,
-			string differenceToPrevious,
+			TimeSpan overallTime,
+			TimeSpan stageTime,
+			TimeSpan penaltyTime,
+			TimeSpan DifferenceToLeader,
+			TimeSpan differenceToPrevious,
 			string previousStagePosition)
 		{
 			//DBC
@@ -52,11 +52,11 @@ namespace MotorsportResultAPI.Types.ExternalMessage.v1.AutoCross
 			this.c_name = name;
 			this.c_car = car;
 			this.c_category = category;
-			this.c_overallTime = overallTime;
-			this.c_stageTime = stageTime;
-			this.c_penaltyTime = penaltyTime;
-			this.c_differenceToLeader = DifferenceToLeader;
-			this.c_differenceToPrevious = differenceToPrevious;
+			this.c_overallTime = new DateTime(overallTime.Ticks).ToString("HH:mm:ss.f");
+			this.c_stageTime = new DateTime(stageTime.Ticks).ToString("HH:mm:ss.f");
+			this.c_penaltyTime = new DateTime(penaltyTime.Ticks).ToString("HH:mm:ss.f");
+			this.c_differenceToLeader = new DateTime(DifferenceToLeader.Ticks).ToString("HH:mm:ss.f");
+			this.c_differenceToPrevious = new DateTime(differenceToPrevious.Ticks).ToString("HH:mm:ss.f");
 			this.c_previouStagePosition = previousStagePosition;
 		}
 	}
