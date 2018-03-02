@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace MotorsportResultAPI.Types.Data.v1.AutoCross
+namespace MotorsportResultAPI.Types.Data.v1.Rally
 {
 	public class Competitor
 	{
@@ -12,7 +12,7 @@ namespace MotorsportResultAPI.Types.Data.v1.AutoCross
 		private readonly string c_name;
 		private readonly string c_car;
 		private readonly string c_category;
-		private readonly List<MotorsportResultAPI.Types.Data.v1.AutoCross.StageResult> c_stageResults;
+		private readonly List<MotorsportResultAPI.Types.Data.v1.Rally.StageResult> c_stageResults;
 
 
 		public string Id { get { return this.c_id; } }
@@ -21,7 +21,7 @@ namespace MotorsportResultAPI.Types.Data.v1.AutoCross
 		public string Name { get { return this.c_name; } }
 		public string Car { get { return this.c_car; } }
 		public string Category { get { return this.c_category; } }
-		public List<MotorsportResultAPI.Types.Data.v1.AutoCross.StageResult> StageResults { get { return this.c_stageResults; } }
+		public List<MotorsportResultAPI.Types.Data.v1.Rally.StageResult> StageResults { get { return this.c_stageResults; } }
 
 
 		public Competitor(
@@ -31,7 +31,7 @@ namespace MotorsportResultAPI.Types.Data.v1.AutoCross
 			string name,
 			string car,
 			string category,
-			List<MotorsportResultAPI.Types.Data.v1.AutoCross.StageResult> stageResults)
+			List<MotorsportResultAPI.Types.Data.v1.Rally.StageResult> stageResults)
 		{
 			//DBC
 			

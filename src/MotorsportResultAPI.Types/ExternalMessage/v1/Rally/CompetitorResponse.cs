@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace MotorsportResultAPI.Types.ExternalMessage.v1.AutoCross
+namespace MotorsportResultAPI.Types.ExternalMessage.v1.Rally
 {
 	public class CompetitorResponse
 	{

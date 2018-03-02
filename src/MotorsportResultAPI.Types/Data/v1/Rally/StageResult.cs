@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-namespace MotorsportResultAPI.Types.ExternalMessage.v1.AutoCross
+namespace MotorsportResultAPI.Types.Data.v1.Rally
 {
-	public class StageResult
+	public class StageResult : IEquatable<MotorsportResultAPI.Types.Data.v1.Rally.StageResult>
 	{
 		private readonly int c_stageId;
 		private readonly string c_stageTime;
@@ -18,13 +18,18 @@ namespace MotorsportResultAPI.Types.ExternalMessage.v1.AutoCross
 		public StageResult(
 			int stageId,
 			string stageTime,
-			string PenaltyTime)
+			string penaltyTime)
 		{
-			//DBC
-			
 			this.c_stageId = stageId;
 			this.c_stageTime = stageTime;
-			this.c_penaltyTime = PenaltyTime;
+			this.c_penaltyTime = penaltyTime;
+		}
+
+		public bool Equals(
+			StageResult other)
+		{
+			if (other == null) return false;
+			return (this.c_stageTime.Equals(other.StageTime) && this.c_penaltyTime.Equals(other.PenaltyTime));
 		}
 	}
 }

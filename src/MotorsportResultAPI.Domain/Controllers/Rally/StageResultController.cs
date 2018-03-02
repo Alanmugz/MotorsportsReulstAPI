@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 //using Check = CCS.Common.DBC.Check;
 
 
-namespace MotorsportResultAPI.Public.Controllers.AutoCross
+namespace MotorsportResultAPI.Public.Controllers.Rally
 {
 	//[MotorsportResultAPI.Public.Security.BasicAuthentication]
-	[Route("autocross/v1")]
+	[Route("rally/v1")]
 	public class StageResultController : Controller
 	{
 		//private readonly ILog c_logger;
-		//private readonly MotorsportResultAPI.Data.AutoCross.ICompetitorRepository c_competitorRepository;
+		//private readonly MotorsportResultAPI.Data.Rally.ICompetitorRepository c_competitorRepository;
 
 
 		//public StageResultController(
 		//	ILog logger,
-		//	MotorsportResultAPI.Data.AutoCross.ICompetitorRepository resultRepository)
+		//	MotorsportResultAPI.Data.Rally.ICompetitorRepository resultRepository)
 		//{
 		//	//Check.RequireArgumentNotNull("logger", logger);
 
@@ -32,7 +32,7 @@ namespace MotorsportResultAPI.Public.Controllers.AutoCross
 		//public HttpResponseMessage Post(
 		//	int eventId,
 		//	int competitorid,
-		//	MotorsportResultAPI.Types.Domain.v1.AutoCross.StageResult stageResult)
+		//	MotorsportResultAPI.Types.Domain.v1.Rally.StageResult stageResult)
 		//{
 		//	var _loggingContext = string.Format("{0}.Post", this.GetType().FullName);
 		//	this.c_logger.InfoFormat("{0} Commencing", _loggingContext);
@@ -52,7 +52,7 @@ namespace MotorsportResultAPI.Public.Controllers.AutoCross
 		//public HttpResponseMessage Put(
 		//	int eventId,
 		//	int competitorid,
-		//	MotorsportResultAPI.Types.Domain.v1.AutoCross.StageResult stageResult)
+		//	MotorsportResultAPI.Types.Domain.v1.Rally.StageResult stageResult)
 		//{
 		//	var _loggingContext = string.Format("{0}.Post", this.GetType().FullName);
 		//	this.c_logger.InfoFormat("{0} Commencing", _loggingContext);
@@ -74,10 +74,10 @@ namespace MotorsportResultAPI.Public.Controllers.AutoCross
 		//	{
 		//		case MotorsportResultAPI.Types.Enumeration.Results.AlreadyExists:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.BadRequest,
-		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "autocross/v1/stageresult", "stageresult already exists"));
+		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "Rally/v1/stageresult", "stageresult already exists"));
 		//		case MotorsportResultAPI.Types.Enumeration.Results.InvalidTimeFormat:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.BadRequest,
-		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "autocross/v1/stageresult", "invalid time format"));
+		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "Rally/v1/stageresult", "invalid time format"));
 		//		case MotorsportResultAPI.Types.Enumeration.Results.Appended:
 		//		default:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.Created);
@@ -92,13 +92,13 @@ namespace MotorsportResultAPI.Public.Controllers.AutoCross
 		//	{
 		//		case MotorsportResultAPI.Types.Enumeration.Results.DoesNotExist:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.BadRequest,
-		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "autocross/v1/stageresult", "stageresult does not exists"));
+		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "Rally/v1/stageresult", "stageresult does not exists"));
 		//		case MotorsportResultAPI.Types.Enumeration.Results.InvalidTimeFormat:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.BadRequest,
-		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "autocross/v1/stageresult", "invalid time format"));
+		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "Rally/v1/stageresult", "invalid time format"));
 		//		case MotorsportResultAPI.Types.Enumeration.Results.MatchingElement:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.BadRequest,
-		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "autocross/v1/stageresult", "stageresult to be updated matches existing stageresult"));
+		//				new MotorsportResultAPI.Types.Domain.v1.Error("400", "Rally/v1/stageresult", "stageresult to be updated matches existing stageresult"));
 		//		case MotorsportResultAPI.Types.Enumeration.Results.Updated:
 		//		default:
 		//			return base.Request.CreateResponse(System.Net.HttpStatusCode.Created);

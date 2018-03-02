@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace MotorsportResultAPI.Types.Domain.v1.AutoCross
+namespace MotorsportResultAPI.Types.Domain.v1.Rally
 {
 	public class PreviousResult
 	{
