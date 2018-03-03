@@ -6,7 +6,7 @@ namespace MotorsportResultAPI.Domain.Workflow.Rally
 {
     public interface IGetEvent
     {
-        IEnumerable<MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResponse> Execute(
+        MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResultResponse Execute(
             string competitorId,
             int stageId);
     }

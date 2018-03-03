@@ -137,7 +137,7 @@ namespace MotorsportResultAPI.Domain.Controllers.Rally
 
 
 		private IActionResult ParseGetEventResult(
-			IEnumerable<MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResponse> subject)
+			MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResultResponse subject)
 		{
 			switch (subject)
 			{

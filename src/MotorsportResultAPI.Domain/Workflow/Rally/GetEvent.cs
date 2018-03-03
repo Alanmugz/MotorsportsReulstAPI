@@ -22,7 +22,7 @@ namespace MotorsportResultAPI.Domain.Workflow.Rally
         }
 
 
-        public IEnumerable<MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResponse> Execute(
+        public MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResultResponse Execute(
             string eventId,
             int stageId)
         {
@@ -68,50 +68,95 @@ namespace MotorsportResultAPI.Domain.Workflow.Rally
 		}
 
 
-        private IEnumerable<MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResponse> BuildCompetitorResponse(
+        private MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResultResponse BuildCompetitorResponse(
 			IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.Competitor> competitorResults,
 			IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.PreviousResult> previousStageResult,
 			int stageId)
 		{
-			var _competitorStageResults = competitorResults
+			var _stageResult = this.BuildStageResult(competitorResults, stageId);
+			var _overallResult = this.BuildOverallResult(competitorResults, previousStageResult, stageId);
+
+			return new MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResultResponse(_stageResult, _overallResult);
+		}
+
+
+		private IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.CompetitorStageResult> BuildStageResult(
+			IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.Competitor> competitorResults,
+			int stageId)
+		{
+			var _stageResultOrdered = competitorResults
 				.Where(competitorStageResult => competitorStageResult.StageResults.Count() >= stageId)
 				.Select(competitor => {
-					var OverallTime = this.BuildOverallTime(competitor, stageId);
-					var StageTime = competitor.StageResults.Where(stageResult => stageResult.StageId == stageId).First().StageTime;
-					var PenaltyTime = competitor.StageResults.Where(stageResult => stageResult.StageId == stageId).First().PenaltyTime;
+					var _overallTime = this.BuildOverallTime(competitor, stageId);
+					var _stageTime = competitor.StageResults.Where(stageResult => stageResult.StageId == stageId).First().StageTime;
+					var _penaltyTime = competitor.StageResults.Where(stageResult => stageResult.StageId == stageId).First().PenaltyTime;
 					return new {
+						CarNumber = competitor.CarNumber,
+						Name = competitor.Name,
+						Car = competitor.Car,
+						Category = competitor.Category,
+						OverallTime = _overallTime,
+						StageTime = _stageTime,
+						PenaltyTime = _penaltyTime };
+				})
+			.OrderBy(response => response.StageTime).ToList();
+
+			return _stageResultOrdered
+				.Select((competitor, position) => {
+					var _differenceToLeader = _stageResultOrdered.First().StageTime;
+					var _differenceToPrevious = _stageResultOrdered.First().StageTime;
+					if (position > 0) { _differenceToPrevious = _stageResultOrdered.ElementAt(position - 1).StageTime; }
+					return new MotorsportResultAPI.Types.Domain.v1.Rally.CompetitorStageResult(
+						++position,
 						competitor.CarNumber,
 						competitor.Name,
 						competitor.Car,
 						competitor.Category,
-						OverallTime,
-						StageTime,
-						PenaltyTime };
+						competitor.StageTime,
+						competitor.StageTime.Subtract(_differenceToLeader),
+						competitor.StageTime.Subtract(_differenceToPrevious));
+				});
+		}
+
+
+		private IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.CompetitorOverallResult> BuildOverallResult(
+			IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.Competitor> competitorResults,
+			IEnumerable<MotorsportResultAPI.Types.Domain.v1.Rally.PreviousResult> previousStageResult,
+			int stageId)
+		{
+			var _overallResultOrdered = competitorResults
+				.Where(competitorStageResult => competitorStageResult.StageResults.Count() >= stageId)
+				.Select(competitor => {
+					var _overallTime = this.BuildOverallTime(competitor, stageId);
+					var _stageTime = competitor.StageResults.Where(stageResult => stageResult.StageId == stageId).First().StageTime;
+					var _penaltyTime = competitor.StageResults.Where(stageResult => stageResult.StageId == stageId).First().PenaltyTime;
+					return new {
+						CarNumber = competitor.CarNumber,
+						Name = competitor.Name,
+						Car = competitor.Car,
+						Category = competitor.Category,
+						OverallTime = _overallTime,
+						StageTime = _stageTime,
+						PenaltyTime = _penaltyTime };
 				})
 			.OrderBy(response => response.OverallTime).ToList();
-		
-			var _result = _competitorStageResults.Select((competitor, position) => {
-				var _differenceToLeader = TimeSpan.Zero;
-				var _differenceToPrevious = _competitorStageResults.First().OverallTime;
-				if (position == 0) { _differenceToLeader = _competitorStageResults.First().OverallTime; }
-				if (position > 0) { _differenceToPrevious = _competitorStageResults.ElementAt(position - 1).OverallTime; }
-				var _competitor = new MotorsportResultAPI.Types.ExternalMessage.v1.Rally.CompetitorResponse(
+
+			return _overallResultOrdered.Select((competitor, position) => {
+				var _differenceToLeader = _overallResultOrdered.First().OverallTime;
+				var _differenceToPrevious = _overallResultOrdered.First().OverallTime;
+				if (position > 0) { _differenceToPrevious = _overallResultOrdered.ElementAt(position - 1).OverallTime; }
+				return new MotorsportResultAPI.Types.Domain.v1.Rally.CompetitorOverallResult(
 					++position,
 					competitor.CarNumber,
 					competitor.Name,
 					competitor.Car,
 					competitor.Category,
 					competitor.OverallTime,
-					competitor.StageTime,
 					competitor.PenaltyTime,
 					competitor.OverallTime.Subtract(_differenceToLeader),
 					competitor.OverallTime.Subtract(_differenceToPrevious),
 					this.PrevStagePosition(competitor.CarNumber, position, stageId, previousStageResult));
-
-				return _competitor;
 			});
-
-			return _result;
 		}
 
 
